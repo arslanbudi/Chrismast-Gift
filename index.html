@@ -18,7 +18,6 @@
             justify-content: center;
             min-height: 100vh;
             overflow-x: hidden;
-            /* Padding default hanya untuk desktop */
             padding: 20px;
         }
 
@@ -40,7 +39,6 @@
             background-color: #000;
             cursor: pointer;
             overflow: hidden;
-            /* Default Desktop Style */
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(254, 44, 85, 0.3);
             aspect-ratio: 16 / 9;
@@ -49,7 +47,7 @@
         .video-click-area video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Video memenuhi area tanpa gepeng */
+            object-fit: cover;
             display: block;
             pointer-events: none;
         }
@@ -64,11 +62,11 @@
         /* Tombol Play Overlay */
         .play-button {
             position: absolute;
-            top: 50%;
+            top: 45%; /* Naik sedikit biar ga nabrak tombol claim */
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
+            width: 70px; /* Sedikit diperkecil */
+            height: 70px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 50%;
             border: 3px solid rgba(255, 255, 255, 0.8);
@@ -76,7 +74,6 @@
             align-items: center;
             justify-content: center;
             z-index: 5;
-            animation: pulse-play 2s infinite;
             backdrop-filter: blur(2px);
         }
 
@@ -85,10 +82,37 @@
             display: block;
             width: 0;
             height: 0;
-            border-left: 25px solid #fff;
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            margin-left: 8px;
+            border-left: 20px solid #fff;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 6px;
+        }
+
+        /* --- TOMBOL CLAIM NOW (BARU) --- */
+        .btn-claim {
+            position: absolute;
+            bottom: 15%; /* Posisi dari bawah */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            
+            /* Styling Tombol */
+            background: linear-gradient(90deg, #ff0000, #ff4d4d);
+            color: white;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid white;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            
+            /* Agar teks tidak bisa di-select */
+            user-select: none; 
+            
+            /* Animasi */
+            animation: pulse-claim 1.5s infinite ease-in-out;
         }
 
         .footer {
@@ -101,7 +125,7 @@
         /* --- RESPONSIVE MOBILE FULL SCREEN --- */
         @media (max-width: 768px) {
             body {
-                padding: 0; /* Hapus padding body di HP */
+                padding: 0;
                 justify-content: flex-start;
                 background-color: #000;
             }
@@ -109,21 +133,29 @@
             .container {
                 max-width: 100%;
                 margin: 0;
-                height: 100vh; /* Fallback */
-                height: 100dvh; /* Dynamic Height modern */
+                height: 100vh;
+                height: 100dvh;
             }
 
             .video-click-area {
                 width: 100%;
-                height: 100%; /* Memenuhi container */
-                aspect-ratio: unset; /* Abaikan rasio aspek, ikut layar */
-                border-radius: 0; /* Sudut tajam untuk full screen */
+                height: 100%;
+                aspect-ratio: unset;
+                border-radius: 0;
                 box-shadow: none;
                 max-height: none;
             }
 
             .video-click-area:hover {
-                transform: none; /* Matikan efek zoom di HP */
+                transform: none;
+            }
+
+            /* Sesuaikan posisi tombol di HP agar pas */
+            .btn-claim {
+                bottom: 20%; 
+                width: 80%; /* Lebar tombol 80% layar HP */
+                font-size: 1.5rem;
+                padding: 15px 0;
             }
 
             .footer {
@@ -135,11 +167,11 @@
             }
         }
 
-        /* Animasi */
-        @keyframes pulse-play { 
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); } 
-            70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } 
+        /* Animasi Tombol Claim */
+        @keyframes pulse-claim {
+            0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            50% { transform: translateX(-50%) scale(1.05); box-shadow: 0 0 0 15px rgba(255, 0, 0, 0); }
+            100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
         }
     </style>
 </head>
@@ -147,19 +179,18 @@
  
     <div class="container">
         
-        <!-- LINK VIDEO UTAMA -->
+        <!-- LINK UTAMA (Membungkus Video & Tombol) -->
         <a href="https://www.effectivegatecpm.com/x64qppz6n?key=6a8a14a8c756569c0b2293a5304722e7" class="video-click-area" target="_blank">
             
-            <!-- 
-               CATATAN: 
-               Atribut 'muted' WAJIB ada agar 'autoplay' berfungsi di Chrome/Safari Mobile.
-               Tanpa 'muted', video hanya akan diam (hitam/poster) sampai user klik.
-            -->
             <video autoplay loop muted playsinline poster="banner.png">
                 <source src="video.mp4" type="video/mp4">
             </video>
             
+            <!-- Tombol Play (Visual Tengah) -->
             <div class="play-button"></div>
+
+            <!-- Tombol CLAIM NOW (Visual Bawah) -->
+            <div class="btn-claim">CLAIM NOW 🎁</div>
         </a>
 
         <div class="footer">
